@@ -1,0 +1,20 @@
+Drop the following PNG/JPG assets here. Filenames correspond directly to
+figure numbers in the ICML 2026 Trust3R paper, so you can usually export
+the figure straight from LaTeX (`\includegraphics{...}`) into a PNG.
+
+  PLACEHOLDER_fig1_teaser.png             Figure 1 (p.1)  — RGB / MASt3R / Trust3R, red over-confidence boxes
+  PLACEHOLDER_fig2_pipeline.png           Figure 2 (p.4)  — full method overview
+  PLACEHOLDER_fig3_risk_coverage.png      Figure 3 (p.7)  — 2x3 risk-coverage + sparsification grid
+  PLACEHOLDER_fig4_qualitative_scannetpp.png  Figure 4 (p.8)  — RGB / err / mismatch (MASt3R / Ours)
+  PLACEHOLDER_fig5_tricky24_thermos.png   Figure 5 (p.17) — Tricky24 thermos / reflective metal, 2x3
+  PLACEHOLDER_fig6_tricky24_toilet.png    Figure 6 (p.18) — Tricky24 transparent bottle, 2x3
+  PLACEHOLDER_fig7_qualitative_indoor.png Figure 7 (p.18) — indoor 5-column comparison with Deep Ensemble
+  PLACEHOLDER_fig8_qualitative_outdoor.png  Figure 8 (p.19) — outdoor building façade, 5-column
+
+Recommended widths:
+  Hero teaser / pipeline / risk-coverage: >= 1600 px wide PNG
+  Qualitative grids:                       >= 1400 px wide PNG
+  Tricky24 examples:                       >= 1200 px wide PNG
+
+When you drop a real file in, just delete the PLACEHOLDER_ prefix and the
+matching <img src="..."> tag in ../../index.html will pick it up.

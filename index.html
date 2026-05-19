@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="Trust3R (ICML 2026): unifying feed-forward pointmap prediction with evidential learning for trust-aware 3D reconstruction. A single-pass Normal-Inverse-Wishart head yields a closed-form multivariate Student-t predictive distribution over dense pointmaps.">
+  <meta name="keywords"
+    content="Trust3R, MASt3R, DUSt3R, VGGT, evidential deep learning, NIW, Normal-Inverse-Wishart, uncertainty quantification, 3D reconstruction, ICML 2026">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trust It or Not · Trust3R · ICML 2026</title>
+
+  <link rel="icon" type="image/svg+xml" href="./static/favicon.svg">
+  <link rel="alternate icon" href="./static/favicon.svg">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+</head>
+
+<body>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero is-trust">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+
+            <h1 class="title is-1 publication-title">
+              Trust It or Not<span class="title-qmark">?</span>: Evidential Uncertainty for <br>
+              Feed-Forward 3D Reconstruction with <span class="grad-accent">Trust3R</span>
+            </h1>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=YfuA8zoAAAAJ&hl=en" target="_blank" rel="noopener">Zihao Zhu</a><sup>1,*</sup>,</span>
+              <span class="author-block">
+                <a href="https://wyzhao23.github.io/" target="_blank" rel="noopener">Wenyuan Zhao</a><sup>1,*</sup>,</span>
+              <span class="author-block">
+                <a href="https://nuochen1203.github.io/" target="_blank" rel="noopener">Nuo Chen</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="https://tiangroup.engr.tamu.edu/" target="_blank" rel="noopener">Chao Tian</a><sup>1,&dagger;</sup>,</span>
+              <span class="author-block">
+                <a href="https://phai-lab.github.io/index.html" target="_blank" rel="noopener">Zhiwen Fan</a><sup>1,&dagger;</sup>
+              </span>
+            </div>
+
+            <div class="is-size-6 publication-authors affil">
+              <span class="author-block">
+                <sup>1</sup>Department of Electrical and Computer Engineering, Texas A&amp;M University
+              </span>
+              <br>
+              <span class="author-block muted">
+                <sup>*</sup>equal contribution &nbsp;&middot;&nbsp;
+                <sup>&dagger;</sup>equal advising
+              </span>
+            </div>
+
+            <div class="venue-line">
+              <span class="venue-badge">ICML&nbsp;2026 &middot; Seoul, South Korea</span>
+            </div>
+
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="#" class="external-link button is-rounded is-trust-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#" class="external-link button is-rounded is-trust-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#" class="external-link button is-rounded is-trust-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OVERVIEW ============ -->
+  <section class="section section-overview reveal">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width has-text-centered">
+          <h2 class="title is-3 section-title">Overview</h2>
+          <div class="content has-text-justified overview-body">
+            <p>
+              Geometric foundation models such as DUSt3R and MASt3R now predict dense pointmaps from
+              uncalibrated images in a single forward pass. Yet the per-pixel confidence they emit
+              is heuristic: it lacks a probabilistic interpretation and often fails to indicate
+              where and how much the predicted geometry can be trusted &mdash; leaving downstream
+              alignment, fusion, and SLAM modules with no calibrated signal to lean on.
+            </p>
+            <p>
+              We present <b>Trust3R</b>, a trust-aware 3D reconstruction framework that pairs a
+              lightweight gated residual mean refinement with evidential learning to predict
+              pointmap evidence under a Normal&#8209;Inverse&#8209;Wishart (NIW) prior.
+              Marginalizing yields a closed-form multivariate Student&#8209;t predictive
+              distribution, giving probabilistically grounded pointmap uncertainty with moderate
+              inference overhead &mdash; no sampling, no ensembles.
+            </p>
+            <p>
+              On diverse indoor and outdoor benchmarks (ScanNet++, TUM&#8209;RGBD, KITTI, ETH3D),
+              <b>Trust3R</b> consistently improves risk&#8209;coverage and sparsification, while
+              generally improving geometric accuracy. The design is backbone-agnostic: attached to a
+              frozen VGGT model, the same evidential head lifts Spearman&nbsp;&rho; from
+              0.32 &rarr; 0.64 and halves NLL.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ METHOD (Figure 2) ============ -->
+  <section class="section reveal">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3 section-title">Method</h2>
+
+          <figure class="image">
+            <img src="./static/images/figure_2.png"
+                 alt="Figure 2: Trust3R pipeline. MASt3R backbone + gated residual head + evidential NIW UQ head producing a closed-form multivariate Student-t predictive distribution per pixel.">
+          </figure>
+
+          <div class="content has-text-justified method-body" style="margin-top: 1.25rem;">
+            <p>
+              <b>Trust3R</b> turns a feed-forward 3D reconstructor into a model that not only predicts
+              geometry, but also tells us where that geometry can be trusted. Starting from a frozen
+              MASt3R backbone, <b>Trust3R</b> adds two lightweight heads. The evidential uncertainty
+              head predicts a compact distribution for every 3D point, producing a dense uncertainty
+              map in a single forward pass &mdash; without ensembles or Monte Carlo sampling. The
+              gated residual head makes small, selective corrections to the predicted pointmap,
+              while preserving the strong geometry already learned by the pretrained backbone.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VISUAL COMPARISONS (Figure 4) ============ -->
+  <section class="section section-light reveal">
+    <div class="container is-max-desktop">
+      <div class="has-text-centered">
+        <h2 class="title is-3 section-title">Qualitative Comparisons</h2>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-full">
+          <figure class="image qual-figure">
+            <img src="./static/images/figure_4.png"
+                 alt="Figure 4: Trust3R vs MASt3R mismatch maps on ScanNet++. Columns: RGB, GT 3D error, Mismatch (MASt3R), Mismatch (Trust3R).">
+          </figure>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="content has-text-justified qual-caption">
+            <p>
+              <b>Mismatch maps.</b> Each row shows, left to right: the input RGB, the oracle
+              3D&#8209;error map, the mismatch between MASt3R&rsquo;s confidence ranking and the
+              oracle error ranking, and the mismatch under <b>Trust3R</b>&rsquo;s evidential
+              uncertainty. Darker pixels indicate better agreement between where the model says it
+              is uncertain and where it is actually wrong, so a uniformly darker right column means
+              <b>Trust3R</b>&rsquo;s uncertainty tracks true reconstruction error far more
+              faithfully than MASt3R&rsquo;s heuristic confidence.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS (Figure 3) ============ -->
+  <section class="section reveal">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3 section-title">Uncertainty Ranking Quality</h2>
+
+          <figure class="image">
+            <img src="./static/images/fig3_risk_coverage.png"
+                 alt="Figure 3: Risk-coverage and sparsification curves on ScanNet++, KITTI, TUM. Trust3R is consistently lower across the entire coverage range.">
+          </figure>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="content has-text-justified qual-caption">
+            <p>
+              <b>Uncertainty ranking quality on three test sets.</b>
+              Top row shows the <i>Risk&#8211;Coverage</i> gap
+              &Delta;R(c) = R<sub>unc</sub>(c) &minus; R<sub>oracle</sub>(c), where R<sub>oracle</sub>
+              is obtained by sorting pixels by their <i>true</i> 3D error for the same method
+              (method-specific oracle). Bottom row shows the <i>sparsification error</i>
+              &Delta;E(s) = E<sub>unc</sub>(s) &minus; E<sub>oracle</sub>(s). Lower is better;
+              &Delta;&nbsp;=&nbsp;0 indicates perfect (oracle) ranking. Each subplot uses its own
+              y-axis range for readability.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUANTITATIVE TABLES ============ -->
+  <section class="section section-light reveal">
+    <div class="container is-max-widescreen">
+      <div class="has-text-centered">
+        <h2 class="title is-3 section-title">Quantitative Results</h2>
+      </div>
+
+      <div class="tables-stack">
+        <figure class="table-block">
+          <img src="./static/images/table_1.png" alt="">
+          <figcaption class="table-cap table-cap-below">
+            <b>Uncertainty evaluation.</b>
+            Results on ScanNet++, TUM RGB-D, and KITTI, computed over valid pixels. We report
+            AURC, AUSE, and Spearman&nbsp;&rho;. <i>Single-pass</i> uses one inference pass, while
+            <i>multi-pass</i> uses <i>T</i> stochastic inference passes or <i>K</i> trained models.
+            Time reports training time in hours (h); Avg. is the mean across the three datasets.
+            Bold and underline mark the best and second-best results within the single-pass block.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BIBTEX ============ -->
+  <section class="section reveal" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-3 section-title has-text-centered">BibTeX</h2>
+      <pre class="bibtex"><code>@inproceedings{zhu2026trust3r,
+  title     = {Trust3{R}: Unifying Feed-Forward Pointmap Prediction
+               and Evidential Learning for Trust-Aware {3D} Reconstruction},
+  author    = {Zhu, Zihao and Zhao, Wenyuan and Chen, Nuo and
+               Tian, Chao and Fan, Zhiwen},
+  booktitle = {Proceedings of the 43rd International Conference
+               on Machine Learning (ICML)},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {306},
+  year      = {2026},
+  publisher = {PMLR},
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="#"><i class="fas fa-file-pdf"></i></a>
+        <a class="icon-link" href="#"><i class="ai ai-arxiv"></i></a>
+        <a class="icon-link" href="#"><i class="fab fa-github"></i></a>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p class="muted">
+              Website template adapted from
+              <a href="https://lightgaussian.github.io/">LightGaussian</a> and
+              <a href="https://nerfies.github.io/">Nerfies</a>. We thank the
+              authors for kindly open-sourcing their templates.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (!els.length) return;
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      els.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+
+</body>
+
+</html>

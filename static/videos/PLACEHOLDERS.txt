@@ -1,0 +1,19 @@
+Drop short MP4 clips here for the "Reconstructions & Uncertainty" carousel.
+Keep them silent (the browser only autoplays muted video) and short (10-15 s
+loops are ideal so the carousel rotates without dead air).
+
+  PLACEHOLDER_scannetpp_uncertainty.mp4   ScanNet++ indoor scene
+  PLACEHOLDER_tum_uncertainty.mp4         TUM RGB-D indoor scene
+  PLACEHOLDER_kitti_uncertainty.mp4       KITTI outdoor / driving scene
+  PLACEHOLDER_tricky24_uncertainty.mp4    Tricky24 transparent-object scene
+
+Suggested production recipe (per clip):
+  1. Predict a pointmap pair with MASt3R baseline AND Trust3R on the same image pair.
+  2. Render two synchronised Open3D / Polyscope orbits (one per method),
+     coloring each point by per-pixel uncertainty (turbo or viridis).
+  3. Stack the two orbits side-by-side at 1920x540 (or stacked 960x1080),
+     export 30 fps, encode with `ffmpeg -c:v libx264 -crf 22 -pix_fmt yuv420p -an`.
+
+The full paper video lives in the separate "Video" section near the bottom
+of index.html — replace its <iframe src="about:blank"> with the real
+https://www.youtube.com/embed/... URL when uploaded.
